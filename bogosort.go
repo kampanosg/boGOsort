@@ -7,10 +7,15 @@ func Sort(s []any) []any {
 	return nil
 }
 
-func shuffle(s []any) []any {
+func Shuffle(s []int) []int {
 	return nil
 }
 
-func isSorted(s []any) bool {
-	return false
+func IsSorted(s []int) bool {
+	for i := 1; i < len(s); i++ {
+		if s[i-1] > s[i] {
+			return false
+		}
+	}
+	return true
 }
