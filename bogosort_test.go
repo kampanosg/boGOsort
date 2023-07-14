@@ -57,3 +57,30 @@ func TestShuffleSlice(t *testing.T) {
 		})
 	}
 }
+
+func TestSort(t *testing.T) {
+	tests := []struct {
+		name     string
+		slice    []int
+		expected []int
+	}{
+		{name: "empty slice", slice: []int{}, expected: []int{}},
+		{name: "single element slice", slice: []int{1}, expected: []int{1}},
+		{name: "slice already sorted", slice: []int{1, 2, 3}, expected: []int{1, 2, 3}},
+		{name: "multi-element slice", slice: []int{2, 1, 3}, expected: []int{1, 2, 3}},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			tc := tt
+			t.Parallel()
+
+			cp := make([]int, len(tc.slice))
+			copy(cp, tc.slice)
+
+			bogosort.Sort(cp)
+
+			match.MatchExactly(t, cp, tc.expected)
+		})
+	}
+}
