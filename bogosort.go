@@ -5,11 +5,21 @@ import (
 	"time"
 )
 
-func Sort(s []any) []any {
+func Sort(s []int) {
 	if len(s) < 2 {
-		return s
+		return
 	}
-	return nil
+
+	if IsSorted(s) {
+		return
+	}
+
+	for {
+		Shuffle(s)
+		if IsSorted(s) {
+			break
+		}
+	}
 }
 
 func Shuffle(s []int) {
