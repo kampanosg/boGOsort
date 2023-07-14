@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	bogosort "github.com/kampanosg/boGOsort"
+	match "github.com/kampanosg/go-match-slices"
 )
 
 func TestIsOrdered(t *testing.T) {
@@ -27,6 +28,32 @@ func TestIsOrdered(t *testing.T) {
 			if isSorted := bogosort.IsSorted(tc.slice); isSorted != tc.expected {
 				t.Errorf("expected IsSorted(%v) to be %v, but got %v", tc.slice, tc.expected, isSorted)
 			}
+		})
+	}
+}
+
+func TestShuffleSlice(t *testing.T) {
+	tests := []struct {
+		name     string
+		slice    []int
+		expected []int
+	}{
+		{name: "empty slice", slice: []int{}, expected: []int{}},
+		{name: "single element slice", slice: []int{1}, expected: []int{1}},
+		{name: "larger slice", slice: []int{1, 2, 3, 4, 5}, expected: []int{5, 4, 1, 3, 2}},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			tc := tt
+			t.Parallel()
+
+			cp := make([]int, len(tc.slice))
+			copy(cp, tc.slice)
+
+			bogosort.Shuffle(cp)
+
+			match.MatchElements(t, cp, tc.expected)
 		})
 	}
 }
