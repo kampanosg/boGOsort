@@ -5,3 +5,7 @@ test: ## Runs any tests in the current directory tree
 .PHONY: fmt
 fmt: ## Formats the code
 	go fmt ./...
+
+.PHONY: run-example
+run-example: ## Runs the example
+	go run ./example/main.go
